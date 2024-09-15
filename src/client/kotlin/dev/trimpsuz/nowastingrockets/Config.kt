@@ -11,6 +11,7 @@ object Config {
     const val CONFIG_FILE_NAME: String = "$MOD_ID.json"
 
     var isEnabled: Boolean = true
+    var forceBoostElytra: Boolean = false
 
     private val configFile = File(Utils.Companion.getConfigDirectory(), CONFIG_FILE_NAME)
     private val gson: Gson = GsonBuilder().setPrettyPrinting().create()
@@ -20,13 +21,14 @@ object Config {
             configFile.reader().use {
                 val configMap: Map<String, Boolean> = gson.fromJson(it, Map::class.java) as Map<String, Boolean>
                 isEnabled = configMap["isEnabled"] ?: isEnabled
+                forceBoostElytra = configMap["forceBoostElytra"] ?: forceBoostElytra
             }
         }
     }
 
     fun save() {
         configFile.writer().use {
-            gson.toJson(mapOf("isEnabled" to isEnabled), it)
+            gson.toJson(mapOf("isEnabled" to isEnabled, "forceBoostElytra" to forceBoostElytra), it)
         }
     }
 }

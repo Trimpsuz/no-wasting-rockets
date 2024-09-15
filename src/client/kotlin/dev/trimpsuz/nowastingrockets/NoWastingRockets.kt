@@ -3,11 +3,13 @@ package dev.trimpsuz.nowastingrockets
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
+import net.minecraft.client.MinecraftClient
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Items
+import net.minecraft.network.packet.c2s.play.PlayerInteractItemC2SPacket
 import net.minecraft.text.Style
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
@@ -20,6 +22,7 @@ object NoWastingRockets : ClientModInitializer {
 	private val logger = LoggerFactory.getLogger("no-wasting-rockets")
 
 	private lateinit var keyBindingToggleEnabled: KeyBinding
+	private lateinit var keyBindingForceBoostElytra: KeyBinding
 	private lateinit var keyBindingOpenConfig: KeyBinding
 
 	override fun onInitializeClient() {
@@ -30,6 +33,15 @@ object NoWastingRockets : ClientModInitializer {
 		keyBindingToggleEnabled = KeyBindingHelper.registerKeyBinding(
 			KeyBinding(
 				"Toggle on/off",
+				InputUtil.Type.KEYSYM,
+				GLFW.GLFW_KEY_UNKNOWN,
+				"No Wasting Rockets"
+			)
+		)
+
+		keyBindingForceBoostElytra = KeyBindingHelper.registerKeyBinding(
+			KeyBinding(
+				"Toggle Force Boost Elytra",
 				InputUtil.Type.KEYSYM,
 				GLFW.GLFW_KEY_UNKNOWN,
 				"No Wasting Rockets"
@@ -54,6 +66,14 @@ object NoWastingRockets : ClientModInitializer {
 				Config.save()
 			}
 
+			while (keyBindingForceBoostElytra.wasPressed()) {
+				Config.forceBoostElytra = !Config.forceBoostElytra
+				client.player?.sendMessage(Text.literal("Toggled Force Boost Elytra ").append(
+					if(Config.forceBoostElytra) Text.literal("ON").setStyle(Style.EMPTY.withColor(Formatting.GREEN)) else Text.literal("OFF").setStyle(Style.EMPTY.withColor(Formatting.RED))
+				), true)
+				Config.save()
+			}
+
 			while (keyBindingOpenConfig.wasPressed()) {
 				client.setScreen(ConfigScreen.createConfigScreen(null))
 			}
@@ -73,6 +93,10 @@ object NoWastingRockets : ClientModInitializer {
 			val fireworksComponent = itemStack.get(DataComponentTypes.FIREWORKS)
 
 			if(fireworksComponent?.explosions?.isEmpty() == true) {
+				if(Config.forceBoostElytra && player.isFallFlying) {
+					MinecraftClient.getInstance().networkHandler?.sendPacket(PlayerInteractItemC2SPacket(hand, 0, player.yaw, player.pitch))
+				}
+
 				return ActionResult.FAIL
 			}
 		}
