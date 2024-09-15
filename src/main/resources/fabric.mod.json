@@ -30,13 +30,7 @@
 			"dev.trimpsuz.nowastingrockets.ModMenuIntegration"
 		]
 	},
-	"mixins": [
-		"no-wasting-rockets.mixins.json",
-		{
-			"config": "no-wasting-rockets.client.mixins.json",
-			"environment": "client"
-		}
-	],
+	"mixins": [],
 	"depends": {
 		"fabricloader": ">=0.16.5",
 		"minecraft": "~1.21.1",
@@ -45,8 +39,5 @@
 		"fabric-language-kotlin": "*",
 		"cloth-config2": "*",
 		"modmenu": "*"
-	},
-	"suggests": {
-		"another-mod": "*"
 	}
 }
