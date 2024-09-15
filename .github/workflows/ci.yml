@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  push:
+    paths:
+      - 'gradle/**/*'
+      - 'gradle*'
+      - 'src/**/*'
+      - '*.gradle'
+      - 'gradle.properties'
+      - '.github/workflows/*.yml'
+    branches:
+      - '**'
+    tags:
+      - '*.*.*'
+  workflow_dispatch:
+
+env:
+  ARTIFACT_NAME: no-wasting-rockets
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: temurin
+
+      - name: Build with Gradle
+        run: ./gradlew clean build --no-daemon
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: build/libs/*.jar
+
+  release:
+    name: Release
+    runs-on: ubuntu-22.04
+    needs: build
+    if: ${{ github.event_name == 'push' && github.ref_type == 'tag' }}
+    permissions:
+      contents: write
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ./artifact/
+
+      - name: Create draft release
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          tag_name: ${{ github.ref_name }}
+          files: artifact/*.jar
+          token: ${{ secrets.GITHUB_TOKEN }}
