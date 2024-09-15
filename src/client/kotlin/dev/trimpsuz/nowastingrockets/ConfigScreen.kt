@@ -24,7 +24,7 @@ object ConfigScreen {
             .addEntry(
                 entryBuilder.startBooleanToggle(Text.of("Force Boost Elytra"), Config.forceBoostElytra)
                     .setDefaultValue(false)
-                    .setTooltip(Text.of("If flying with Elytra, forces the rocket to boost even while looking at a block."))
+                    .setTooltip(Text.of("If flying with elytra, forces the rocket to boost even while looking at a block."))
                     .setSaveConsumer { value -> Config.forceBoostElytra = value}
                     .build()
             )
