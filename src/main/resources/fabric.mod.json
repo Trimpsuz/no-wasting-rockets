@@ -1,0 +1,53 @@
+{
+	"schemaVersion": 1,
+	"id": "no-wasting-rockets",
+	"version": "${version}",
+	"name": "No Wasting Rockets",
+	"description": "Simple mod to prevent wasting firework rockets. Prevents launching firework rockets that have no effects on them when not flying with an elytra.",
+	"authors": [ {
+		"name": "trimpsuz",
+		"contact": {
+			"homepage": "https://trimpsuz.dev",
+			"email": "me@trimpsuz.dev"
+		}
+	} ],
+	"contact": {
+		"homepage": "https://github.com/trimpsuz/no-wasting-rockets",
+		"sources": "https://github.com/trimpsuz/no-wasting-rockets",
+		"issues": "https://github.com/trimpsuz/no-wasting-rockets/issues"
+	},
+	"license": "GPLv3",
+	"icon": "assets/no-wasting-rockets/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"main": [
+			{
+				"value": "dev.trimpsuz.nowastingrockets.NoWastingRockets",
+				"adapter": "kotlin"
+			}
+		],
+		"client": [
+			{
+				"value": "dev.trimpsuz.nowastingrockets.NoWastingRocketsClient",
+				"adapter": "kotlin"
+			}
+		]
+	},
+	"mixins": [
+		"no-wasting-rockets.mixins.json",
+		{
+			"config": "no-wasting-rockets.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.5",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*",
+		"fabric-language-kotlin": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
