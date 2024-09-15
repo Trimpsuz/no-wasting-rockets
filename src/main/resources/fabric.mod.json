@@ -20,17 +20,14 @@
 	"icon": "assets/no-wasting-rockets/icon.png",
 	"environment": "client",
 	"entrypoints": {
-		"main": [
+		"client": [
 			{
 				"value": "dev.trimpsuz.nowastingrockets.NoWastingRockets",
 				"adapter": "kotlin"
 			}
 		],
-		"client": [
-			{
-				"value": "dev.trimpsuz.nowastingrockets.NoWastingRocketsClient",
-				"adapter": "kotlin"
-			}
+		"modmenu": [
+			"dev.trimpsuz.nowastingrockets.ModMenuIntegration"
 		]
 	},
 	"mixins": [
@@ -45,7 +42,9 @@
 		"minecraft": "~1.21.1",
 		"java": ">=21",
 		"fabric-api": "*",
-		"fabric-language-kotlin": "*"
+		"fabric-language-kotlin": "*",
+		"cloth-config2": "*",
+		"modmenu": "*"
 	},
 	"suggests": {
 		"another-mod": "*"
