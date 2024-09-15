@@ -28,6 +28,13 @@ object ConfigScreen {
                     .setSaveConsumer { value -> Config.forceBoostElytra = value}
                     .build()
             )
+            .addEntry(
+                entryBuilder.startBooleanToggle(Text.of("Boost With Explosions"), Config.boostWithExplosions)
+                    .setDefaultValue(true)
+                    .setTooltip(Text.of("Turning this off prevents boosting with firework rockets that have explosion effects on them."))
+                    .setSaveConsumer { value -> Config.boostWithExplosions = value}
+                    .build()
+            )
 
         builder.setSavingRunnable { Config.save() }
 

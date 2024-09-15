@@ -12,6 +12,7 @@ object Config {
 
     var isEnabled: Boolean = true
     var forceBoostElytra: Boolean = false
+    var boostWithExplosions: Boolean = true
 
     private val configFile = File(Utils.Companion.getConfigDirectory(), CONFIG_FILE_NAME)
     private val gson: Gson = GsonBuilder().setPrettyPrinting().create()
@@ -22,13 +23,14 @@ object Config {
                 val configMap: Map<String, Boolean> = gson.fromJson(it, Map::class.java) as Map<String, Boolean>
                 isEnabled = configMap["isEnabled"] ?: isEnabled
                 forceBoostElytra = configMap["forceBoostElytra"] ?: forceBoostElytra
+                boostWithExplosions = configMap["boostWithExplosions"] ?: boostWithExplosions
             }
         }
     }
 
     fun save() {
         configFile.writer().use {
-            gson.toJson(mapOf("isEnabled" to isEnabled, "forceBoostElytra" to forceBoostElytra), it)
+            gson.toJson(mapOf("isEnabled" to isEnabled, "forceBoostElytra" to forceBoostElytra, "boostWithExplosions" to boostWithExplosions), it)
         }
     }
 }
