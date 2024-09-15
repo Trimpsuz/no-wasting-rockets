@@ -20,7 +20,6 @@ import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
 import org.lwjgl.glfw.GLFW
 import org.slf4j.LoggerFactory
-import javax.swing.Action
 
 object NoWastingRockets : ClientModInitializer {
 	private val logger = LoggerFactory.getLogger("no-wasting-rockets")
