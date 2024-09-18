@@ -1,7 +1,11 @@
-# No Wasting Rockets
-
 [![CI](https://github.com/Trimpsuz/no-wasting-rockets/actions/workflows/ci.yml/badge.svg)](https://github.com/Trimpsuz/no-wasting-rockets/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/Trimpsuz/no-wasting-rockets/actions/workflows/codeql.yml/badge.svg)](https://github.com/Trimpsuz/no-wasting-rockets/actions/workflows/codeql.yml)
+<br>
+![Modrinth](https://img.shields.io/modrinth/game-versions/no-wasting-rockets?logo=modrinth)
+![Modrinth](https://img.shields.io/modrinth/v/no-wasting-rockets?logo=modrinth)
+![Modrinth](https://img.shields.io/modrinth/dt/no-wasting-rockets?logo=modrinth)
+
+# No Wasting Rockets
 
 > [!IMPORTANT]  
 > This mod is **for the client only**, do not try installing it on the server.
